@@ -43,12 +43,8 @@ class App extends Component {
         if(this.state.loading){
             return (
                 <Row>
-                <Col s={4}>
-                </Col>
-                <Col className="loader-col" s={4}>
+                <Col className="loader-col" s={4} offset='s4'>
                 <Preloader size='big'/>
-                </Col>
-                <Col s={4}>
                 </Col>
             </Row>
             );
@@ -63,9 +59,15 @@ class App extends Component {
             return (
                 <div>
                     <Row>
-                        <Input value={this.state.input} onChange={this.filterUsers.bind(this)} s={6} label="Filter" validate><Icon>search</Icon></Input>
+                        <Col s={8} offset='s2'>
+                            <Input value={this.state.input} onChange={this.filterUsers.bind(this)} s={6} label="Filter" validate><Icon>search</Icon></Input>                    
+                        </Col>
                     </Row>
-                    <UsersList users={list} />                
+                    <Row>
+                        <Col s={8} offset='s2'>
+                            <UsersList users={list} />
+                        </Col>                        
+                    </Row>
                 </div>);
         }
     }
