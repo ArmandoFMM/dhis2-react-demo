@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Button as Bt} from 'react-materialize'
 
 class User extends Component {
 
@@ -8,9 +9,14 @@ class User extends Component {
       }
     
     render() {
-        return (<div>
-                    <a href={this.props.user.href}>{this.props.user.displayName}</a>
-                 </div>
+        return (
+            <tr>
+                <td>{this.props.user.displayName}</td>
+                <td>{this.props.user.email}</td>
+                <td>
+                    <Bt waves='light' href={this.props.user.href} icon='remove_red_eye'></Bt>
+                </td>
+            </tr>
         );
     }
 }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import User from './User';
+import { Table } from 'react-materialize';
+
 
 class UsersList extends Component {
 
@@ -9,9 +11,19 @@ class UsersList extends Component {
       }
     
     render() {
-        return (<div>
-                    <div>{this.props.users.map((user) => <User user={user} key={user.id}/>)}</div>
-                </div>);
+        return (<Table>
+            <thead>
+                <tr>
+                    <th data-field="id">Name</th>
+                    <th data-field="name">E-mail</th>
+                    <th data-field="price">Action</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                {this.props.users.map((user) => <User user={user} key={user.id}/>)}
+            </tbody>
+        </Table>);
     }
 }
 

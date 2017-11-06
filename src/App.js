@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import User from './User';
 import UsersList from './UsersList';
+import { Button, Input, Row, Col, Preloader, Icon } from 'react-materialize';
 
 const rootEl = document.querySelector('#root');
 
@@ -10,12 +11,12 @@ class App extends Component {
     
     constructor(props) {
         super(props);
-        this.state = { users: [], loading: true };
+        this.state = { users: [], loading: true, input: '' };
       }
 
     getUsers(){
     
-        return fetch('http://localhost:8080/dhis/api/users?paging=false&fields=href,id,displayName', {
+        return fetch('https://play.dhis2.org/demo/api/users?paging=false&fields=href,id,displayName,email', {
             headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Basic '+btoa('admin:district')+''
@@ -32,15 +33,40 @@ class App extends Component {
         this.getUsers();
     }
 
+    filterUsers(e){
+        this.setState({
+            input: e.target.value,
+          });
+    }
+
     render() {
         if(this.state.loading){
-            return (<div>
-                        <h1>Loading</h1>
-                    </div>);
-        }else{
             return (
-                <UsersList users={this.state.users} />
+                <Row>
+                <Col s={4}>
+                </Col>
+                <Col className="loader-col" s={4}>
+                <Preloader size='big'/>
+                </Col>
+                <Col s={4}>
+                </Col>
+            </Row>
             );
+        }else{
+            const list = this.state.users
+            .filter(user => {
+                
+                return user.displayName.includes(this.state.input);
+            });
+
+
+            return (
+                <div>
+                    <Row>
+                        <Input value={this.state.input} onChange={this.filterUsers.bind(this)} s={6} label="Filter" validate><Icon>search</Icon></Input>
+                    </Row>
+                    <UsersList users={list} />                
+                </div>);
         }
     }
 }
